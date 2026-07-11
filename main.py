@@ -22,7 +22,7 @@ OWNER_ID = 8116120039
 
 ESPERANDO_NUMERO = 1
 
-# CONFIGURACIÓN DE SUPABASE
+# CONFIGURACIÓN DE SUPABASE DIRECTA
 SUPABASE_URL = "https://ywjkjiqylapmtkvsacky.supabase.co"
 SUPABASE_KEY = "sb_publishable_IBl_qN866dl5ZRmgwUBxlw_Z_87pApK"
 
@@ -187,6 +187,7 @@ bot_app.add_handler(CommandHandler("deny", deny))
 @app.on_event("startup")
 async def startup_event():
     global supabase
+    # Carga directa de credenciales para evitar el error 500
     supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
     await bot_app.initialize()
 
@@ -199,4 +200,4 @@ async def webhook_endpoint(request: Request):
 
 @app.get("/")
 def index():
-    return {"status": "Bot conectado a Supabase Cloud DB"}
+    return {"status": "Bot conectado a Supabase Cloud DB de forma directa"}
