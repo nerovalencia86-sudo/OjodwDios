@@ -15,7 +15,7 @@ from telegram.ext import (
 from supabase import create_client, Client
 
 # CONFIGURACIÓN DEL BOT
-TOKEN = "8664870579:AAFmy5JsZw4RQ-YyGEN9RaEbAZbtkrPFkMY"
+TOKEN = "8664870579:AAEeNdV8OZNWQ5mbQYYAgpC4BjnCGf7lGuY"
 API_KEY = "ohhyejin1"
 BASE_URL = "https://cuervo-api.vercel.app/nequi"
 OWNER_ID = 8116120039
@@ -25,11 +25,11 @@ ESPERANDO_NUMERO = 1
 # CONFIGURACIÓN DE SUPABASE
 SUPABASE_URL = "https://ywjkjiqylapmtkvsacky.supabase.co"
 SUPABASE_KEY = "sb_publishable_IBl_qN866dl5ZRmgwUBxlw_Z_87pApK"
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Inicializar FastAPI y Bot para Webhook
 app = FastAPI()
 bot_app = Application.builder().token(TOKEN).build()
+supabase: Client = None
 
 # --- FUNCIONES DE BASE DE DATOS ---
 
@@ -186,6 +186,8 @@ bot_app.add_handler(CommandHandler("deny", deny))
 
 @app.on_event("startup")
 async def startup_event():
+    global supabase
+    supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
     await bot_app.initialize()
 
 @app.post("/webhook")
